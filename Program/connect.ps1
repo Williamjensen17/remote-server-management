@@ -24,7 +24,7 @@ function GetData {
     Write-host 
     Write-host
     Invoke-Command $Server -ScriptBlock{gwmi win32_logicaldisk | Format-Table DeviceId, MediaType, @{n="Size";e={[math]::Round($_.Size/1GB,2)}},@{n="FreeSpace";e={[math]::Round($_.FreeSpace/1GB,2)}}}
-    Return $RAMCount
+    
 }
 
 
@@ -76,8 +76,8 @@ foreach ($Server in $data)
         Write-host $header
         if (!(test-connection $Server.IP)) {Write-host Server Status: OFFLINE -foregroundcolor yellow}
         else {        
-            $RAMCount = GetData -Server $Server.IP
-            Control -Server $Server.IP -RAMCount $RAMCount
+            GetData -Server $Server.IP
+            Control -Server $Server.IP
         }
 
     }
