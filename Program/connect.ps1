@@ -48,7 +48,7 @@ function Control {
     if ($RAMCount -lt $RAMNeeded) {Write-host Ram is less than $RAMNeeded GB $RAMCount -foregroundcolor red}
     else {Write-host more than $RAMNeeded GB left $RAMCount -foregroundcolor green}
 
-    $Spooler = Get-Service -name Spooler | Select-Object Status
+    $Spooler = Invoke-Command $Server -Scriptblock{Get-Service -name Spooler | Select-Object Status}
     if ($Spooler){Write-host Spooler Status: $Spooler.status}
     else {Write-host Spooler Status: $Spooler.status}
     Write-Host $breaker
@@ -59,8 +59,8 @@ function Control {
     if (!($Spooler)){Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Windows Feature: Spooler is not running}
     elseif ($RAMCount -lt $RAMNeeded) {Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Not enough RAM}
     elseif ($DiskSpace -lt $DiskNeeded) {Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Not enough RAM}
-    elseif ($RAMCount -lt ($RAMNeeded /100 * 80)){Write-Host Server Status: Warning -ForegroundColor Red; Write-Host Low on RAM}
-    elseif ($DiskSpace -lt ($DiskNeeded /100 * 80)){Write-Host Server Status: Warning -ForegroundColor Red; Write-Host Low on Disk}
+    elseif ($RAMCount -lt ($RAMNeeded * 1.2)){Write-Host Server Status: Warning -ForegroundColor Yellow; Write-Host Low on RAM}
+    elseif ($DiskSpace -lt ($DiskNeeded *1.2)){Write-Host Server Status: Warning -ForegroundColor Yellow; Write-Host Low on Disk}
 }   
 
 foreach ($Server in $data) 
