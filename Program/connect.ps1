@@ -1,4 +1,3 @@
-# import da fuggin list mate
 $RAMNeeded = 8          #RAM ammount in GB 
 $DiskNeeded = 20        #Disk ammount in GB
 
