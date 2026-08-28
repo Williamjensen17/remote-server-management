@@ -49,8 +49,7 @@ function Control {
     else {Write-host more than $RAMNeeded GB left $RAMCount -foregroundcolor green}
 
     $Spooler = Invoke-Command $Server -Scriptblock{Get-Service -name Spooler | Select-Object Status}
-    if ($Spooler){Write-host Spooler Status: $Spooler.status}
-    else {Write-host Spooler Status: $Spooler.status}
+    Write-host Spooler Status: $Spooler.status
     Write-Host $breaker
     Write-Host
 
