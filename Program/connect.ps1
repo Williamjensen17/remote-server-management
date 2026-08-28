@@ -57,11 +57,12 @@ function Control {
 
     #Status
     
-    if (($Spooler)){Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Feature Spooler is not running}
-    elseif (1 -ge 1) {
-        <# Action when this condition is true #>
-    }
-}
+    if (!($Spooler)){Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Windows Feature: Spooler is not running}
+    elseif ($RAMCount -lt $RAMNeeded) {Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Not enough RAM}
+    elseif ($DiskSpace -lt $DiskNeeded) {Write-Host Server Status: Critical -ForegroundColor Red; Write-Host Not enough RAM}
+    elseif ($RAMCount -lt ($RAMNeeded /100 * 80)){Write-Host Server Status: Warning -ForegroundColor Red; Write-Host Low on RAM}
+    elseif ($DiskSpace -lt ($DiskNeeded /100 * 80)){Write-Host Server Status: Warning -ForegroundColor Red; Write-Host Low on Disk}
+}   
 
 foreach ($Server in $data) 
 {
